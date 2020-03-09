@@ -1,0 +1,267 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[swedish]{babel}
+%%%%%%%
+% \usepackage{layout}
+% \usepackage{lipsum}
+%%%%%%%
+\usetheme[% Complete settings. Default value in []
+% titleimagecolor=red,       % [gray], darkgray, red, blue, green
+% titleimagemargin=2mm,      % Distance [2mm]    Frame around title page image
+% navigationsymbols=false,   % true   / [false]  Navigation symbols in the foot
+% mathseriffont=false,       % true   / [false]  Serif / non-serif math fonts
+% foot=true,                 % [true] / false    Footline or not
+% nofootslidenum=false       % true   / [false]  Keep slide num even when foot=false
+footlogo=false,             % [true] / false    Put LU logo to the left of footer
+% english=true,              % [true] / false    English / Swedish logo
+% LTHlogo=true,             % true   / [false]  Use LTH logo instead of LU on title and end pages.
+% blackenumeratenumber=true, % [true] / false    Black enumerate numbers, o.w. Lund bronze
+% blackitemmark=false,       % true   / [false]  Black item marks, o.w. Lund bronze
+% defaultfont=false,         % true   / [false]  Falls back to default beamer fonts
+% sectionframe=true,
+]{ulund}
+%%%%%%%%%%%%%%%%%%%%% Layout commands 
+%%%% Foot
+% \ulundfootleft{\insertshortauthor}
+% \ulundfootmid{\insertshorttitle}
+% \ulundfootright{\insertframenumber}% {\insertframenumber:\inserttotalframenumber}
+%%%% Titleimage
+%\titleimage{Pictures/ULUNDcolor} % Replaces the LU image. Voids option titleimagecolor
+\titleimage{img/kids-programming}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title[Ond och god programmering]{{\fontsize{14}{14}\rmfamily\selectfont Ond och god programmering} \\ {\fontsize{9}{11}\selectfont -- algoritmerna som räddar planeten och förstör demokratin}}
+\author[Björn Regnell]{%
+  Professor Bjorn Regnell, LTH}
+%%%%%%%%%%%%%%%%%%%%%
+\usepackage{verbatim}
+%%%%%%%%%%%%% Verbatim code box
+\usepackage[skins,listings]{tcolorbox}
+\tcbuselibrary{listingsutf8}
+
+\usepackage[absolute,overlay]{textpos}
+\usepackage{varwidth}
+
+\usepackage{pgf-pie}
+
+\newcommand{\TitleSlide}{\begin{frame}[plain]\titlepage\end{frame}}
+
+\newcommand{\EndSlide}{\begin{frame}[plain]\endpage\end{frame}}
+
+\newcommand{\Hi}[1]{\colorbox{yellow}{#1}}
+
+\newcommand{\Section}[1]{\titleimagecolor{red}\section{#1}}
+
+\newcommand{\code}{\lstinline[basicstyle=\ttfamily]}
+
+\newcommand{\Hide}[1]{}
+
+
+\newenvironment{Slide}[1]%
+  {\begin{frame}[environment=Slide]{#1}}
+  {\end{frame}}%
+
+\newcommand{\ImageWidth}[2]{
+  \setbeamercolor{background canvas}{bg=black}
+\begin{frame}[plain]%
+  \centering\makebox[\paperwidth]{\includegraphics[width=#1\paperwidth]{#2}}
+\end{frame}
+\setbeamercolor{background canvas}{bg=white}
+}
+
+\newcommand{\ImageHeight}[2]{\setbeamercolor{background canvas}{bg=black}
+\begin{frame}[plain]
+  \makebox[\paperwidth]{\centering\includegraphics[height=#1\paperheight]{#2}}
+\end{frame}
+\setbeamercolor{background canvas}{bg=white}
+}
+
+
+\newcommand{\FramedWidth}[1]{\setbeamercolor{background canvas}{bg=white}
+\begin{frame}[plain]
+%  \begin{overlayarea}{0cm}{0cm}
+  \begin{textblock*}{1.0\paperwidth}(0cm,0cm)
+  %\centering\includegraphics[width=1.0\paperwidth,keepaspectratio]{#1} 
+  \begin{tikzpicture}[overlay]
+   \node at (0.5\paperwidth,-0.5\paperheight) {\includegraphics[width=1.0\paperwidth,keepaspectratio]{#1}};
+   \draw[white, line width=4.5mm, yshift=-1.0\paperheight] (0,0) rectangle (1.0\paperwidth,1.0\paperheight);
+  \end{tikzpicture}
+  \end{textblock*}
+%  \end{overlayarea}
+\end{frame}
+\setbeamercolor{background canvas}{bg=white}
+}
+
+\newcommand{\FramedHeight}[1]{\setbeamercolor{background canvas}{bg=white}
+\begin{frame}[plain]
+%  \begin{overlayarea}{0cm}{0cm}
+  \begin{textblock*}{1.0\paperwidth}(0cm,0cm)
+  %\centering\includegraphics[width=1.0\paperwidth,keepaspectratio]{#1} 
+  \begin{tikzpicture}[overlay]
+   \node at (0.5\paperwidth,-0.5\paperheight) {\includegraphics[height=1.0\paperheight,keepaspectratio]{#1}};
+   \draw[white, line width=4.5mm, yshift=-1.0\paperheight] (0,0) rectangle (1.0\paperwidth,1.0\paperheight);
+  \end{tikzpicture}
+  \end{textblock*}
+%  \end{overlayarea}
+\end{frame}
+\setbeamercolor{background canvas}{bg=white}
+}
+
+
+\newcommand{\FramedWidthTextLeft}[2]{\setbeamercolor{background canvas}{bg=white}
+\begin{frame}[plain]
+%  \begin{overlayarea}{0cm}{0cm}
+  \begin{textblock*}{1.0\paperwidth}(0cm,0cm)
+  %\centering\includegraphics[width=1.0\paperwidth,keepaspectratio]{#1} 
+  \begin{tikzpicture}[overlay]
+   \node at (0.5\paperwidth,-0.5\paperheight) {\includegraphics[width=1.0\paperwidth,keepaspectratio]{#1}};
+   \draw[white, line width=4.5mm, yshift=-1.0\paperheight] (0,0) rectangle (1.0\paperwidth,1.0\paperheight);
+   \node[text=lundbronze, fill=white, inner sep=4.5mm] 
+   at (0.22\paperwidth,-0.5\paperheight) 
+   {\rmfamily
+   {
+     \parbox{0.4\paperwidth}{%~\\
+       #2
+    %  \begin{itemize}
+    %    \item hej
+    %  \end{itemize}
+    %\vspace{0.5em}
+    }
+  }
+};
+  \end{tikzpicture}
+  \end{textblock*}
+%  \end{overlayarea}
+\end{frame}
+\setbeamercolor{background canvas}{bg=white}
+}
+
+\newcommand{\FramedWidthTextLeftItemsRight}[3]{\setbeamercolor{background canvas}{bg=white}
+\begin{frame}[plain]
+%  \begin{overlayarea}{0cm}{0cm}
+  \begin{textblock*}{1.0\paperwidth}(0cm,0cm)
+  %\centering\includegraphics[width=1.0\paperwidth,keepaspectratio]{#1} 
+  \begin{tikzpicture}[overlay]
+   \node at (0.5\paperwidth,-0.5\paperheight) {\includegraphics[width=1.0\paperwidth,keepaspectratio]{#1}};
+   
+   \draw[white, line width=4.5mm, yshift=-1.0\paperheight] (0,0) rectangle (1.0\paperwidth,1.0\paperheight);
+
+   \node[text=lundbronze, fill=white, inner sep=4.5mm] 
+   at (0.22\paperwidth,-0.5\paperheight) 
+   {\rmfamily
+   {
+     \parbox{0.4\paperwidth}{%~\\
+       #2
+    }
+  }
+};
+
+\fill[white, fill opacity=0.6, yshift=-1.0\paperheight] 
+(0.5\paperwidth,0) rectangle (1.0\paperwidth,1.0\paperheight);
+
+
+\node[text=lundbronze, text opacity=1, fill=white, fill opacity=0.0, inner sep=4.5mm] 
+at (1.0\paperwidth,-0.5\paperheight) 
+{\rmfamily
+{
+  \parbox{0.91\paperwidth}{%~\\
+ \begin{itemize}\bf
+   #3
+ \end{itemize}
+ }
+}
+};
+  \end{tikzpicture}
+  \end{textblock*}
+%  \end{overlayarea}
+\end{frame}
+\setbeamercolor{background canvas}{bg=white}
+}
+
+
+\begin{document}
+
+%\input{body}
+
+\TitleSlide
+
+\FramedWidth{img/kids-programming}
+
+\ImageHeight{0.8}{img/earth}
+
+\FramedWidthTextLeft{img/earth}{Mjukvara är planeten jordens största  och viktigaste samarbetsprojekt!}
+
+\FramedWidth{img/kompetensbrist}
+
+\FramedHeight{img/kvinnor-it}
+
+
+\ImageHeight{1.0}{img/digitalisering}
+
+
+\FramedWidth{img/vr} %https://www.nbcnews.com/mach/science/how-virtual-reality-helping-seniors-breathe-new-life-old-memories-ncna1069461
+%VR in use at a nursing home in Falls Church, Va., on Oct. 10, 2019.Jahi Chikwendiu / The Washington Post via Getty Images file
+
+\ImageHeight{0.9}{img/corona}
+
+\Hide{\FramedWidthTextLeft{img/corona}{\href{https://coronavirus.jhu.edu/map.html}{coronavirus.jhu.edu/map.html}}}
+
+
+
+
+\FramedWidth{img/skanetrafiken-kaos}
+
+\FramedWidth{img/ibm3090}
+
+\FramedWidth{img/abc80}
+
+
+\FramedHeight{img/keeling}
+
+\FramedWidth{img/greta}
+
+\FramedHeight{img/snowden}
+
+\FramedWidthTextLeft{img/dna-code}{Programmera livets kod}
+
+\FramedHeight{img/dna-svt}
+
+\FramedWidth{img/cave}
+
+\FramedWidthTextLeftItemsRight{img/cave}{Människans tekniska utveckling}{
+  \item Domesticering
+  \item Mekanisering
+  \item Elektrifiering
+  \item Datorisering
+  \item Digitalisering  
+}
+
+\ImageHeight{1.0}{img/ai-svt}
+
+\FramedWidthTextLeft{img/brain}{\Large Programmeringens\\byggstenar}
+
+\FramedWidthTextLeftItemsRight{img/brain}{\Large Programmeringens\\byggstenar}{
+  \item Sekvens
+  \item Alternativ
+  \item Repetition
+  \item Abstraktion  
+}
+
+
+
+\begin{Slide}{Länkar}
+\begin{itemize}
+  \item \href{https://www.svtplay.se/dokument-utifran-ai-hot-eller-mojlighet}{https://www.svtplay.se/dokument-utifran-ai-hot-eller-mojlighet}
+  \item \href{https://coronavirus.jhu.edu/map.html}{coronavirus.jhu.edu/map.html}
+  \item \href{https://www.nbcnews.com/mach/science/how-virtual-reality-helping-seniors-breathe-new-life-old-memories-ncna1069461}{www.nbcnews.com/mach/science/how-virtual-reality-helping-seniors-breathe-new-life-old-memories-ncna1069461}
+  \item Keeling-kurvan: \href{https://scripps.ucsd.edu/programs/keelingcurve/}{https://scripps.ucsd.edu/programs/keelingcurve/}
+  \item The Great Hack (Netflix): \href{https://www.netflix.com/se-en/title/80117542}{https://www.netflix.com/se-en/title/80117542}
+\end{itemize}  
+\end{Slide}
+
+
+\FramedWidth{Pictures/LTH_Logo_en}
+
+%https://tech-insider.org/mainframes/research/2007/0615.html
+
+\end{document}
