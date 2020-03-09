@@ -1,0 +1,35 @@
+tmp
+**/old
+**/bin
+**/*.pdf
+
+# Latex
+**/*.aux
+**/*.log
+**/*.nav
+**/*.out
+**/*.snm
+**/*.vrb
+**/*.synctex.gz
+**/*.synctex.gz(busy)
+**/*.toc
+**/*.fdb_latexmk
+**/*.fls
+
+# Java / Scala
+**/*.class
+**/.bloop
+**/.metals
+
+# Eclipse
+**/*.cache-main
+**/.metadata
+
+# Sbt
+**/target
+
+# Editor swap files
+*.swp   # vim
+*~      # emacs
+
+.idea
